@@ -18,17 +18,20 @@
     </div>
     <div class="main-navbar">
       
-      <a href="#" class="active"><span>Accueil</span></a>
-      <a href="#"><span>Détails de l'évènement</span></a>
-      <a href="#"><span>À propos</span></a>
-      <a href="#"><span>Contact</span></a>
-      <a href="#"><span>Évènements passés</span></a>
+      <a href="#" class="active lien"><span>Accueil</span></a>
+      <a href="#" class="lien"><span>Détails de l'évènement</span></a>
+      <a href="#" class="lien"><span>À propos</span></a>
+      <a href="#" class="lien"><span>Contact</span></a>
+      <a href="#" class="lien"><span>Évènements passés</span></a>
       <a href="javascript:void(0);" class="icon" onclick="editNav()">
         <i class="fa fa-bars"></i>
       </a>
     </div>
     </div>
-  </div>
+    <div id="formValidation">
+      <h2>Votre formulaire a bien été envoyé</h2>
+      <button id="formValidationButton">OK</button>
+    </div>
     <main>
       <div class="hero-section">
         <div class="hero-content">
@@ -51,7 +54,7 @@
           je m'inscris
         </button>
       </div>
-
+      
       <div class="bground">
         <div class="content">
           <span class="close"></span>
@@ -59,9 +62,9 @@
             <form
               name="reserve"
               id="inscription"
-              action="index.html"
+              action=""
               method="get"
-              onsubmit="return validate();"
+              onsubmit="return false";
             >
               <div
                 class="formData">
@@ -105,13 +108,14 @@
                   type="date"
                   id="birthdate"
                   name="birthdate"
+                  placeholder="01/11/1987"
                 /><br>
                 <span id="birthdateErreur" class="error"></span>
               </div>
               <div
                 class="formData">
                 <label for="quantity">À combien de tournois GameOn avez-vous déjà participé ?</label><br>
-                <input type="number" class="text-control" id="quantity" name="quantity" min="0" max="99">
+                <input type="text" class="text-control" id="quantity" name="quantity" min="0" max="99">
               </div>
               <span id="quantityErreur" class="error"></span>
               <p class="text-label" for="location1">Quelles villes ?</p>
@@ -214,7 +218,7 @@
                 class="button"
                 value="C'est parti"
               />
-              <p style="color: red;" id="erreur" ></p>
+              <p id="erreur" ></p>
             </form>
           </div>
         </div>

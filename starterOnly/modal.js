@@ -11,7 +11,7 @@ function editNav() {
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
-
+let form = document.querySelector("#inscription");
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
@@ -31,11 +31,13 @@ function closeModal() {
   modalbg.style.display = "none";
 }
 
+
+
 //**********************************************************************//
 //*************************   FORMULAIRE   *****************************//
 //**********************************************************************//
 
-let form = document.querySelector("#inscription");
+
 
 //**********************************************************************//
 //*************************   CHAMP EMAIL   ****************************//
@@ -126,18 +128,19 @@ form.birthdate.addEventListener('change', function() {
 const validBirthdate = function (inputBirthdate) {
 
   let birthdateErreur = document.getElementById("birthdateErreur");
-  let birthdateRegExp = new RegExp ('^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$','g');
+  let birthdateRegExp = new RegExp ('^((([0-9][0-9][0-9][1-9])|([1-9][0-9][0-9][0-9])|([0-9][1-9][0-9][0-9])|([0-9][0-9][1-9][0-9]))-((0[13578])|(1[02]))-((0[1-9])|([12][0-9])|(3[01])))|((([0-9][0-9][0-9][1-9])|([1-9][0-9][0-9][0-9])|([0-9][1-9][0-9][0-9])|([0-9][0-9][1-9][0-9]))-((0[469])|11)-((0[1-9])|([12][0-9])|(30)))|(((000[48])|([0-9][0-9](([13579][26])|([2468][048])))|([0-9][1-9][02468][048])|([1-9][0-9][02468][048]))-02-((0[1-9])|([12][0-9])))|((([0-9][0-9][0-9][1-9])|([1-9][0-9][0-9][0-9])|([0-9][1-9][0-9][0-9])|([0-9][0-9][1-9][0-9]))-02-((0[1-9])|([1][0-9])|([2][0-8])))$');
   let testBirthdate = birthdateRegExp.test(inputBirthdate.value);
-  console.log(testBirthdate); 
+  console.log(inputBirthdate.value); 
 
   if (testBirthdate) {
       birthdateErreur.innerHTML ='';
       return true;
   } else {
-      birthdateErreur.innerHTML = 'Veuillez saisir une date valide';
+      birthdateErreur.innerHTML = 'Veuillez saisir une date valide (jj/mm/aaaa)';
       return false;
   };
 }
+
 
 
 //**********************************************************************//
@@ -164,7 +167,6 @@ const validQuantity = function (inputQuantity) {
       return false;
   };
 }
-
 
 //**********************************************************************//
 //****************   VALIDER CONDITIONS D'UTILISATION   ****************//
@@ -195,12 +197,15 @@ const validQuantity = function (inputQuantity) {
 //**********************************************************************
 //**********************************************************************
 
-document.querySelector("#inscription").addEventListener("submit", function(e) {
+document.querySelector("#inscription").addEventListener("submit", function valid(e) {
 
   let erreur;
   let checkbox1 = document.getElementById("checkbox1");
-  
+  let conditionsErreur = document.getElementById("conditionsErreur");
   let inputs = this;
+  let formValidation = document.getElementById("formValidation");
+  const formValidationButton = document.getElementById("formValidationButton");
+
 
   // Traitement générique pour que tous les champs soient remplis
 
@@ -215,8 +220,27 @@ document.querySelector("#inscription").addEventListener("submit", function(e) {
 
   if (!checkbox1.checked) {
     erreur = "Veuillez accepter les conditions d'utilisation";
+    // conditionsErreur.innerHTML = "Veuillez accepter les conditions d'utilisation";
   }
 
+  // setTimeout(validate() , 5000); 
+
+  // function validate() {
+  //   resultat=window.confirm('Votre formulaire a bien été transmis');
+  // 	if (resultat==1)
+  // 	{
+  // 	}
+  // 	else
+  // 	{
+  // 		return false;
+  // 	}
+  // }
+  function closeFormValidation() {
+    formValidation.style.display = "none";
+    closeModal();
+  }
+  
+  formValidationButton.addEventListener("click", closeFormValidation );
 
 
   if (erreur) {
@@ -224,9 +248,13 @@ document.querySelector("#inscription").addEventListener("submit", function(e) {
     document.getElementById("erreur").innerHTML = erreur;
     return false;
 } else {
-    alert("Formulaire envoyé !");
+      formValidation.style.display = "block";
 }
 })
+
+
+
+
   // let prenom = document.getElementById("prenom");
   // let nom = document.getElementById("nom");
   // let email = document.getElementById("email");
