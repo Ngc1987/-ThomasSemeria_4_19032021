@@ -23,19 +23,72 @@ function launchModal() {
 //*******************/ CLOSE MODAL EVENT /******************************
 //**********************************************************************
 //**********************************************************************
+
+// SELECTION DE L'ELEMENT QUR LEQUEL ON CLIQUERA POUR FERMER LA MODALE
 const modalClose = document.querySelector(".close");
-
+// ECOUTE DU CLIC SUR L'ELEMENT ET LUI APPLIQUER LA FONCTION closeModal
 modalClose.addEventListener("click", closeModal);
-
+// DEFINITION DE LA FONCTION closeModal
 function closeModal() {
   modalbg.style.display = "none";
 }
 
 
 
-//**********************************************************************//
-//*************************   FORMULAIRE   *****************************//
-//**********************************************************************//
+//*******************/ FORMULAIRE /*************************************
+//**********************************************************************
+//**********************************************************************
+// SELECTION DU FORMULAIRE
+document.querySelector("#inscription").addEventListener("submit", function valid(e) {
+  
+  let erreur;
+  let checkbox1 = document.getElementById("checkbox1");
+  let inputs = this;
+  let formValidation = document.getElementById("formValidation");
+  const formValidationButton = document.getElementById("formValidationButton");
+
+
+  // On crée une boucle pour vérifier que tous les inputs ne soient pas vides
+  for (let i = 0; i < inputs.length; i++) {
+    console.log(inputs[i]);
+    // Si un input n'est pas rempli, un message d'erreur s'affiche
+    if (!inputs[i].value) {
+      erreur = "Veuillez renseigner tous les champs";
+      break;
+    }
+  }
+
+  // checkbox1 est la case à cocher pour valider les conditions d'utilisation, si 
+  // elle n'est pas cochée un message d'erreur apparaît
+  if (!checkbox1.checked) {
+    erreur = "Veuillez accepter les conditions d'utilisation";
+  }
+
+  
+  // Si un message d'erreur apparaît, on ne soumet pas le formulaire, on prévient le comportement
+  // par défaut avec e.preventDefault, on affiche l'erreur, si pas d'erreur, on fait apparaître
+  // une petite fenêtre de confirmation
+
+  if (erreur) {
+
+      e.preventDefault();
+      document.getElementById("erreur").innerHTML = erreur;
+      return false;
+
+    } else {
+          formValidation.style.display = "block";
+    }
+
+    // Sur la fenêtre de confirmation, au clic sur le bouton ok, on applique la fonction
+    // closeFormValidation
+    formValidationButton.addEventListener("click", closeFormValidation );
+    // La fonction closeFormValidation fait disparaître la fenêtre de confirmation et nous ferme la modale 
+    // originale
+    function closeFormValidation() {
+      formValidation.style.display = "none";
+      closeModal();
+    }
+})
 
 
 
@@ -50,13 +103,20 @@ function closeModal() {
 //*** Fonction verification email pendant la saisie de l'utilisateur ***//
 const validEmail = function (inputEmail) {
 
+  // emailErreur correspond à un span dans le html qui servira à afficher notre message d'erreur
   let emailErreur = document.getElementById("emailErreur");
+  // La RegExp correspondant à ce champ
   let emailRegExp = new RegExp ('^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$','g');
+  // On teste si la valeur saisie dans l'input respecte la RegExp correspondante
   let testEmail = emailRegExp.test(inputEmail.value);
   // console.log(inputEmail.value); 
 
+
+  // Si la valeur saisie dans l'input respecte les règles de la RegExp, testEmail vaut "true"
+  // Donc si testEmail est true, on renvoie true, sinon on renvoie false et fait apparaître
+  // un message d'erreur
   if (testEmail) {
-      emailErreur.innerHTML ='';
+    emailErreur.innerHTML = '';
       return true;
   } else {
       emailErreur.innerHTML = 'Email invalide';
@@ -67,18 +127,16 @@ const validEmail = function (inputEmail) {
 //**********************************************************************//
 //*************************   CHAMP PRENOM   ***************************//
 //**********************************************************************//
-//**************   Ecouter la modification du prénom   *****************//
 form.prenom.addEventListener('change', function() {
   validPrenom(this);
 })
 
-//*** Fonction verification email pendant la saisie de l'utilisateur ***//
 const validPrenom = function (inputPrenom) {
 
   let prenomErreur = document.getElementById("prenomErreur");
   let prenomRegExp = new RegExp ('^[a-zA-Z]{2}[a-zA-Z-\'éèêàâôöïäüÊÈ]*$','g');
   let testPrenom = prenomRegExp.test(inputPrenom.value);
-  console.log(testPrenom); 
+  // console.log(testPrenom); 
 
   if (testPrenom) {
       prenomErreur.innerHTML ='';
@@ -98,13 +156,12 @@ form.nom.addEventListener('change', function() {
   validNom(this);
 })
 
-//*** Fonction verification email pendant la saisie de l'utilisateur ***//
 const validNom = function (inputNom) {
 
   let nomErreur = document.getElementById("nomErreur");
   let nomRegExp = new RegExp ('^[a-zA-Z]{2}[a-zA-Z-\'éèêàâôöïäüÊÈ]*$','g');
   let testNom = nomRegExp.test(inputNom.value);
-  console.log(testNom); 
+  // console.log(testNom); 
 
   if (testNom) {
       nomErreur.innerHTML ='';
@@ -119,7 +176,6 @@ const validNom = function (inputNom) {
 //**********************************************************************//
 //************************   CHAMP BIRTHDATE   *************************//
 //**********************************************************************//
-//********   Ecouter la modification de la date de naissance   *********//
 form.birthdate.addEventListener('change', function() {
   validBirthdate(this);
 })
@@ -130,7 +186,9 @@ const validBirthdate = function (inputBirthdate) {
   let birthdateErreur = document.getElementById("birthdateErreur");
   let birthdateRegExp = new RegExp ('^((([0-9][0-9][0-9][1-9])|([1-9][0-9][0-9][0-9])|([0-9][1-9][0-9][0-9])|([0-9][0-9][1-9][0-9]))-((0[13578])|(1[02]))-((0[1-9])|([12][0-9])|(3[01])))|((([0-9][0-9][0-9][1-9])|([1-9][0-9][0-9][0-9])|([0-9][1-9][0-9][0-9])|([0-9][0-9][1-9][0-9]))-((0[469])|11)-((0[1-9])|([12][0-9])|(30)))|(((000[48])|([0-9][0-9](([13579][26])|([2468][048])))|([0-9][1-9][02468][048])|([1-9][0-9][02468][048]))-02-((0[1-9])|([12][0-9])))|((([0-9][0-9][0-9][1-9])|([1-9][0-9][0-9][0-9])|([0-9][1-9][0-9][0-9])|([0-9][0-9][1-9][0-9]))-02-((0[1-9])|([1][0-9])|([2][0-8])))$');
   let testBirthdate = birthdateRegExp.test(inputBirthdate.value);
+
   console.log(inputBirthdate.value); 
+  console.log(testBirthdate); 
 
   if (testBirthdate) {
       birthdateErreur.innerHTML ='';
@@ -146,19 +204,18 @@ const validBirthdate = function (inputBirthdate) {
 //**********************************************************************//
 //*********************   CHAMP NOMBRE TOURNOIS   **********************//
 //**********************************************************************//
-//************   Ecouter la modification de la quantité   **************//
 form.quantity.addEventListener('change', function() {
   validQuantity(this);
 })
 
-//*** Fonction verification email pendant la saisie de l'utilisateur ***//
 const validQuantity = function (inputQuantity) {
 
   let quantityErreur = document.getElementById("quantityErreur");
   let quantityRegExp = new RegExp ('^[0-9]+$');
   let testQuantity = quantityRegExp.test(inputQuantity.value);
-  console.log(testQuantity); 
+  // console.log(testQuantity); 
 
+ 
   if (testQuantity) {
       quantityErreur.innerHTML ='';
       return true;
@@ -168,20 +225,6 @@ const validQuantity = function (inputQuantity) {
   };
 }
 
-//**********************************************************************//
-//****************   VALIDER CONDITIONS D'UTILISATION   ****************//
-//**********************************************************************//
-//**********   Ecouter la modification de la case à cocher   ***********//
-// form.checkbox1.addEventListener('change', function() {
-//     let validerConditions = document.getElementById("checkbox1");
-//     let conditionsErreur = document.getElementById("conditionsErreur");
-
-//     if (!validerConditions.checked) {
-//       conditionsErreur.innerHTML = "Veuillez accepter les conditions d'utilisation";
-//       return false;
-//   } 
-// }
-// )
 
 
 
@@ -193,159 +236,4 @@ const validQuantity = function (inputQuantity) {
 
 
 
-//*******************/ FORMULAIRE /*************************************
-//**********************************************************************
-//**********************************************************************
 
-document.querySelector("#inscription").addEventListener("submit", function valid(e) {
-
-  let erreur;
-  let checkbox1 = document.getElementById("checkbox1");
-  let conditionsErreur = document.getElementById("conditionsErreur");
-  let inputs = this;
-  let formValidation = document.getElementById("formValidation");
-  const formValidationButton = document.getElementById("formValidationButton");
-
-
-  // Traitement générique pour que tous les champs soient remplis
-
-  for (let i = 0; i < inputs.length; i++) {
-    console.log(inputs[i]);
-    if (!inputs[i].value) {
-      erreur = "Veuillez renseigner tous les champs";
-      break;
-    }
-  }
-
-
-  if (!checkbox1.checked) {
-    erreur = "Veuillez accepter les conditions d'utilisation";
-    // conditionsErreur.innerHTML = "Veuillez accepter les conditions d'utilisation";
-  }
-
-  // setTimeout(validate() , 5000); 
-
-  // function validate() {
-  //   resultat=window.confirm('Votre formulaire a bien été transmis');
-  // 	if (resultat==1)
-  // 	{
-  // 	}
-  // 	else
-  // 	{
-  // 		return false;
-  // 	}
-  // }
-  function closeFormValidation() {
-    formValidation.style.display = "none";
-    closeModal();
-  }
-  
-  formValidationButton.addEventListener("click", closeFormValidation );
-
-
-  if (erreur) {
-    e.preventDefault();
-    document.getElementById("erreur").innerHTML = erreur;
-    return false;
-} else {
-      formValidation.style.display = "block";
-}
-})
-
-
-
-
-  // let prenom = document.getElementById("prenom");
-  // let nom = document.getElementById("nom");
-  // let email = document.getElementById("email");
-  // let birthdate = document.getElementById("birthdate");
-  // let quantity = document.getElementById("quantity");
-
-
-  
-  // if (!quantity.value) {
-  //   erreur = "Veuillez saisir une quantité";
-  // }
-  // if (!birthdate.value) {
-  //   erreur = "Veuillez saisir une date de naissance";
-  // }
-  // if (!email.value) {
-  //   erreur = "Veuillez saisir un email";
-  // }
-  // if (!nom.value) {
-  //   erreur = "Veuillez saisir un nom";
-  // }
-  // if (!prenom.value) {
-  //   erreur = "Veuillez saisir un prénom";
-  // }
-
-// })
-
-
-
-// let form = document.querySelector("#formulaire");
-
-// form.first.addEventListener('change', function() {
-//   validFirst(this);
-// })
-
-// const validFirst = function(inputFirst) {
-//   let firstRegExp = new RegExp ('^[a-zA-Z0-9_\'éèÊÈE]$','g');
-//   let testFirst = firstRegExp.test(inputFirst.value);
-//   console.log(testFirst);
-
-
-
-
-
-
-
-
-
-// let firstRegExp = new RegExp ('^[a-zA-Z0-9._-]+[@]{1}[a-zA-Z0-9._-]+[.]{1}[a-z]{2,10}$','g');
-
-
-
-//*******************/ FORMULAIRE /*************************************
-//**********************************************************************
-//**********************************************************************
-
-// document.getElementById("inscription").addEventListener("submit", function(e) {
-
-//   let erreur;
-//   let prenom = document.getElementById("prenom");
-//   let nom = document.getElementById("nom");
-//   let email = document.getElementById("email");
-//   let birthdate = document.getElementById("birthdate");
-//   let quantity = document.getElementById("quantity");
-//   let checkbox1 = document.getElementById("checkbox1");
-
-
-//   if (!checkbox1.checked) {
-//     erreur = "Veuillez accepter les conditions d'utilisation";
-//   }
-//   if (!quantity.value) {
-//     erreur = "Veuillez saisir une quantité";
-//   }
-//   if (!birthdate.value) {
-//     erreur = "Veuillez saisir une date de naissance";
-//   }
-//   if (!email.value) {
-//     erreur = "Veuillez saisir un email";
-//   }
-//   if (!nom.value) {
-//     erreur = "Veuillez saisir un nom";
-//   }
-//   if (!prenom.value) {
-//     erreur = "Veuillez saisir un prénom";
-//   }
-
-//   if (erreur) {
-//       e.preventDefault();
-//       document.getElementById("erreur").innerHTML = erreur;
-//       return false;
-//   } else {
-//       alert("Formulaire envoyé !");
-//   }
-
-// })
