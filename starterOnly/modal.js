@@ -82,11 +82,10 @@ form.addEventListener("submit", function valid(e) {
     // Sur la fenêtre de confirmation, au clic sur le bouton ok, on applique la fonction
     // closeFormValidation
     formValidationButton.addEventListener("click", closeFormValidation );
-    // La fonction closeFormValidation fait disparaître la fenêtre de confirmation et nous ferme la modale 
-    // originale
+    // La fonction closeFormValidation fait disparaître la fenêtre de confirmation et transmet le formulaire
     function closeFormValidation() {
       formValidation.style.display = "none";
-      closeModal();
+      form.submit();
     }
 })
 
