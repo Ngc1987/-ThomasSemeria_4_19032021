@@ -89,7 +89,7 @@ input:invalid {
 }
 
 /* @media screen and () */
-@media screen and (max-width: 1110px) and ( min-width:831px) {
+@media screen and (max-width: 1130px) and ( min-width:831px) {
   .topnav {
     display: flex;
     flex-direction: column;
@@ -606,3 +606,4 @@ footer {
     opacity: 1;
   }
 }
+
