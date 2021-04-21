@@ -39,7 +39,11 @@ function closeModal() {
 //**********************************************************************
 //**********************************************************************
 // SELECTION DU FORMULAIRE
+<<<<<<< HEAD
 form.addEventListener("submit", function valid(e) {
+=======
+document.querySelector("#inscription").addEventListener("submit", function valid(e) {
+>>>>>>> formulaire
   
   let erreur;
   let checkbox1 = document.getElementById("checkbox1");
@@ -48,9 +52,13 @@ form.addEventListener("submit", function valid(e) {
   const formValidationButton = document.getElementById("formValidationButton");
 
 
+  const formValidationX = document.querySelector(".close2");
+  formValidationX.addEventListener("click", () => {
+    form.submit();
+  })
   // On crée une boucle pour vérifier que tous les inputs ne soient pas vides
   for (let i = 0; i < inputs.length; i++) {
-    console.log(inputs[i]);
+    // console.log(inputs[i]);
     // Si un input n'est pas rempli, un message d'erreur s'affiche
     if (!inputs[i].value) {
       erreur = "Veuillez renseigner tous les champs";
@@ -82,10 +90,18 @@ form.addEventListener("submit", function valid(e) {
     // Sur la fenêtre de confirmation, au clic sur le bouton ok, on applique la fonction
     // closeFormValidation
     formValidationButton.addEventListener("click", closeFormValidation );
+<<<<<<< HEAD
     // La fonction closeFormValidation fait disparaître la fenêtre de confirmation et transmet le formulaire
     function closeFormValidation() {
       formValidation.style.display = "none";
       form.submit();
+=======
+    // La fonction closeFormValidation fait disparaître la fenêtre de confirmation et nous ferme la modale 
+    // originale
+    function closeFormValidation() {
+      formValidation.style.display = "none";
+      closeModal();
+>>>>>>> formulaire
     }
 })
 
@@ -224,4 +240,5 @@ const validQuantity = function (inputQuantity) {
   };
 }
 
-
+<<<<<<< HEAD
+=======
