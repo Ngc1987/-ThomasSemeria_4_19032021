@@ -48,9 +48,13 @@ form.addEventListener("submit", function valid(e) {
   const formValidationButton = document.getElementById("formValidationButton");
 
 
+  const formValidationX = document.querySelector(".close2");
+  formValidationX.addEventListener("click", () => {
+    form.submit();
+  })
   // On crée une boucle pour vérifier que tous les inputs ne soient pas vides
   for (let i = 0; i < inputs.length; i++) {
-    console.log(inputs[i]);
+    // console.log(inputs[i]);
     // Si un input n'est pas rempli, un message d'erreur s'affiche
     if (!inputs[i].value) {
       erreur = "Veuillez renseigner tous les champs";
@@ -223,5 +227,4 @@ const validQuantity = function (inputQuantity) {
       return false;
   };
 }
-
 
